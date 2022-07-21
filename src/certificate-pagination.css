@@ -1,0 +1,10 @@
+.page__wrapper{
+    display: flex;
+}
+
+.page{
+    display: block;
+    padding: 0 5px;
+    border: 1px solid black;
+    cursor: pointer;
+}
