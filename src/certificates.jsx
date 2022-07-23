@@ -11,6 +11,7 @@ import './certificates.css'
 const Certificates = () => {
 
     const [certificates, setCertificates] = useState([]);
+    const [isLoadCertificate, setIsLoadCertificate] = useState(false);
     const [isDelete, setDelete] = useState(false);
     const [isEdit, setEdit] = useState(false);
     const [url, setUrl] = useState({id: 1, href:'http://localhost:8080/certificates/all?page=1'});
@@ -25,6 +26,7 @@ const Certificates = () => {
     const [dateSort, setDateSort] = useState('');
     const [pages, setPages] = useState([]);
     const [size, setSize] = useState(10);
+    const [isError, setIsError] = useState({value: false, error: {}});
 
     useEffect(() => {
         setDelete(false);
@@ -106,6 +108,7 @@ const Certificates = () => {
     const searchCertificates = async (event) => {
         if(event.key === 'Enter' || event.type === 'click') {
             let url = createUrl(event);
+            console.log(url);
             await fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -208,7 +211,7 @@ const Certificates = () => {
             {errorMessage}
         </Popup>}
         <Container fluid className="certificates-container">
-            <div className="float-right">
+            <div className="search-container">
                 <input
                     placeholder="Search..."
                     name='part'
@@ -225,7 +228,9 @@ const Certificates = () => {
                 <Button color="success" onClick={() => {
                     setModalActive(true);
                     setId('');
+                    setIsLoadCertificate(false);
                     setActionCertificate('new');
+                    setIsError({...isError, value: false});
                 }}>Add New</Button> }
             </div>
             <h3>Certificates</h3>
@@ -258,6 +263,8 @@ const Certificates = () => {
                                         setModalActive(true);
                                         setId(certificate.id);
                                         setActionCertificate('edit');
+                                        setIsLoadCertificate(false);
+                                        setIsError({...isError, value: false});
                                     }}>Edit</Button>
                                     <Button size="sm" color="danger"
                                             onClick={() => remove(certificate._links.delete_certificate.href)}>Delete</Button>
@@ -274,7 +281,12 @@ const Certificates = () => {
             </div>
         </Container>
         <Modal active={modalActive} setActive={setModalActive}>
-            <CertificateEdit id={id} action={actionCertificate} setAction={setActionCertificate} setEdit={setEdit} showToast={() => showToast()} errorMessage={setErrorMessage}/>
+            <CertificateEdit id={id} action={actionCertificate}
+                             setEdit={setEdit} showToast={() => showToast()}
+                             errorMessage={setErrorMessage} setActive={setModalActive}
+                             isLoadCertificate={isLoadCertificate} setIsLoadCertificate={setIsLoadCertificate}
+                             isError={isError} setIsError={setIsError}
+            />
         </Modal>
     </div>);
 }

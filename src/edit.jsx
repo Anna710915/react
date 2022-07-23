@@ -1,15 +1,15 @@
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import {Button, Form} from "reactstrap";
 import './edit.css'
 
-const CertificateEdit = ({id, action, setAction, setEdit, showToast, errorMessage}) => {
+const CertificateEdit = ({id, action, setEdit, showToast, errorMessage, setActive, isLoadCertificate, setIsLoadCertificate,
+                         isError, setIsError}) => {
 
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [duration, setDuration] =useState('');
     const [tags, setTags] = useState('');
     const [description, setDescription] = useState('');
-    const [isError, setIsError] = useState({value: false, error: {}});
     const error = {
         name: '',
         price: '',
@@ -18,9 +18,8 @@ const CertificateEdit = ({id, action, setAction, setEdit, showToast, errorMessag
         description: ''
     };
 
-
     const edit = async () => {
-        if (action !== 'new') {
+        if (action === 'edit' && !isLoadCertificate) {
             try {
                 await fetch(`http://localhost:8080/certificates/certificate/${id}`)
                     .then(response => response.json())
@@ -39,9 +38,10 @@ const CertificateEdit = ({id, action, setAction, setEdit, showToast, errorMessag
                 errorMessage(error.message);
                 showToast();
             }
-           setAction('new');
+            setIsLoadCertificate(true);
         }
     }
+
     edit();
 
     const postData = async () => {
@@ -88,6 +88,7 @@ const CertificateEdit = ({id, action, setAction, setEdit, showToast, errorMessag
                 showToast();
             }
     }
+
     function checkInputData(item){
         let result = true;
         result = lettersLimit(item) && result;
@@ -124,11 +125,11 @@ const CertificateEdit = ({id, action, setAction, setEdit, showToast, errorMessag
     function lettersLimit(item){
         let result = true;
         if(item.name.length <= 6 || item.name.length >= 30){
-            error.name = "Title field must not be less than 6 and greater than 30 characters";
+            error.name = "Must not be less than 6 and greater than 30 characters";
             result = false;
         }
         if(item.description.length <= 12 || item.description.length >= 1000){
-            error.description = "Description field must not be less than 12 and greater than 1000 characters";
+            error.description = "Must not be less than 12 and greater than 1000 characters";
             result = false;
         }
         return result;
@@ -143,7 +144,7 @@ const CertificateEdit = ({id, action, setAction, setEdit, showToast, errorMessag
             error.price = "Price must be greater than 0 ";
             result = false;
         }
-        if(isNaN(item.price) && !Number.isInteger(+item.duration)){
+        if(isNaN(item.duration) && !Number.isInteger(+item.duration)){
             error.duration = "Duration must be a number";
             result = false;
         }else if(+item.duration <= 0){
@@ -190,7 +191,14 @@ const CertificateEdit = ({id, action, setAction, setEdit, showToast, errorMessag
                 </div>
                 <div className="buttons">
                     <div className="cancel">
-                        <input type="submit" value="Cancel"/>
+                        <Button className="cancel__content" onClick={() => {
+                            setName('');
+                            setPrice('');
+                            setTags('');
+                            setDescription('');
+                            setDuration('');
+                            setActive(false);
+                        }}>Cancel</Button>
                     </div>
                     <div className="save">
                         <Button className="save__content" onClick={postData}>Save</Button>

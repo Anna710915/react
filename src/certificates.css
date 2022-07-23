@@ -9,3 +9,29 @@
     justify-content: space-around;
     margin-bottom: 10px;
 }
+
+.search-container{
+    width: 100%;
+    padding: 0 0.5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: space-between;
+}
+
+.search-container input{
+    margin-bottom: 1%;
+    height: 100%;
+    width: 100%;
+    outline: none;
+    padding-left: 15px;
+    font-size: 17px;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    border-bottom-width: 2px;
+    transition: all 0.4s ease;
+}
+
+.search-container input:focus{
+    border-color: #20B2AA;
+}

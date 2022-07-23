@@ -7,9 +7,6 @@
     justify-content: center;
 }
 
-.edit-title{
-
-}
 
 .edit-title.title{
     color: black;
@@ -101,7 +98,7 @@
 .buttons .save{
     grid-column: 2/3;
 }
-.buttons .cancel input[type="submit"]{
+.buttons .cancel .cancel__content{
     color: lightgrey;
     font-size: 20px;
     font-weight: 500;
@@ -126,7 +123,7 @@
 }
 
 .buttons .save .save__content:hover,
-.buttons .cancel input[type="submit"]:hover{
+.buttons .cancel .cancel__content:hover{
     border-color: #20B2AA;
     color: #20B2AA;
 }
