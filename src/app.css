@@ -1,0 +1,31 @@
+.page-app{
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.main{
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+.nav{
+    flex: 0 0 auto;
+}
+
+.login-container{
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.certificates-container{
+   margin-top: 60px;
+}
+
+.footer{
+    flex: 0 0 auto;
+    height: 100%;
+    background-color: lightgray;
+    padding: 1% 0;
+}

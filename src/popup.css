@@ -1,0 +1,19 @@
+.popup-container{
+    height: 10%;
+    width: 100%;
+    background-color: pink;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    z-index: 2;
+    justify-content: center;
+}
+
+.popup__content{
+    padding: 20px;
+    width: 100%;
+}
+
+.message{
+    color: red;
+}
